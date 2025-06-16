@@ -1,6 +1,7 @@
 """Flask application entry point for the Smart Band Edge Service."""
 
 from flask import Flask
+from pyngrok import ngrok  # 👈 Importa pyngrok
 
 import iam.application.services
 from iam.interfaces.services import iam_api
@@ -29,4 +30,9 @@ def index():
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    # 🌐 Iniciar túnel ngrok
+    public_url = ngrok.connect('127.0.0.1:5000', bind_tls=True)  # HTTPS -> Flask
+    print(f"🌍 URL pública ngrok: {public_url}")
+
+    # Ejecutar la app Flask
+    app.run(port=5000)

@@ -1,4 +1,9 @@
 #!/bin/bash
+set -x
+
+# La primera vez poner: chmod +x run.sh
+# Se ejecuta con: ./run.sh
+# Si no instala bien poner en la terminal: rm -rf venv
 
 # Ir al directorio donde está el script
 cd "$(dirname "$0")"
