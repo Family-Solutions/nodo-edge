@@ -35,4 +35,5 @@ if __name__ == "__main__":
     print(f"🌍 URL pública ngrok: {public_url}")
 
     # Ejecutar la app Flask
-    app.run(port=5000)
+    #app.run(port=5000)
+    app.run(host="0.0.0.0", port=5000, debug=True)
