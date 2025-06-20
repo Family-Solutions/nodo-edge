@@ -31,8 +31,8 @@ def index():
 
 if __name__ == "__main__":
     # 🌐 Iniciar túnel ngrok
-    public_url = ngrok.connect('127.0.0.1:5000', bind_tls=True)  # HTTPS -> Flask
-    print(f"🌍 URL pública ngrok: {public_url}")
+    #public_url = ngrok.connect('127.0.0.1:5000', bind_tls=True)  # HTTPS -> Flask
+    #print(f"🌍 URL pública ngrok: {public_url}")
 
     # Ejecutar la app Flask
     #app.run(port=5000)
