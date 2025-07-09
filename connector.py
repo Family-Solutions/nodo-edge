@@ -7,10 +7,12 @@ import argparse
 import sys
 import os
 import glob
+import time
 from typing import Optional, Tuple
 
 # ----- Configuración de la API -----
-API_BASE_URL   = 'https://collar-link-production.up.railway.app'
+#API_BASE_URL   = 'https://collar-link-production.up.railway.app'
+API_BASE_URL   = 'http://localhost:8080'
 UPDATE_ENDPOINT = '/api/v1/collar/updateLocation'
 
 # ----- Funciones de acceso a datos -----
@@ -103,16 +105,25 @@ def main():
         print("No se encontraron dispositivos en la tabla `devices`.")
         return
 
-    for device in devices:
-        device_id = device["device_id"]
-        api_key   = device["api_key"]
+    print("Iniciando envío periódico cada 5 segundos. Presiona Ctrl+C para detener.")
+    try:
+        while True:
+            for device in devices:
+                device_id = device["device_id"]
+                api_key   = device["api_key"]
 
-        loc = fetch_latest_location(conn, device_id)
-        if loc:
-            latitude, longitude = loc
-            upload_location(device_id, api_key, latitude, longitude)
-        else:
-            print(f"[SKIP] Sin registros de ubicación para {device_id}")
+                loc = fetch_latest_location(conn, device_id)
+                if loc:
+                    latitude, longitude = loc
+                    upload_location(device_id, api_key, latitude, longitude)
+                else:
+                    print(f"[SKIP] Sin registros de ubicación para {device_id}")
+
+            # Espera antes de la siguiente ronda
+            time.sleep(5)
+
+    except KeyboardInterrupt:
+        print("\nEnvío periódico detenido por el usuario.")
 
 if __name__ == "__main__":
     main()
